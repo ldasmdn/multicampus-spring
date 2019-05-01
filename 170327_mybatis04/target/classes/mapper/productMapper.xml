@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.IProductDao">
+	
+	<!-- 중복되는 문장을 변수에 담아서 재사용 -->
+	<sql id="columns">
+		code, name, price, pictureurl as picture, description
+	</sql>
+	
+	<resultMap type="product" id="productMap">
+		<id column="code" property="code"/>
+		<result column="name" property="name"/>
+		<result column="price" property="price"/>
+		<result column="pictureurl" property="picture"/>
+		<result column="description" property="description"/>
+	</resultMap>
+	
+	<insert id="insertProduct" parameterType="product">
+		insert into products values(0, #{name}, #{price}, #{picture}, #{description})
+	</insert>
+	
+	<select id="selectProductInfo" parameterType="int" resultType="product">
+		select <include refid="columns"></include> from products where code = #{code}
+	</select>
+	
+	<select id="selectProductList" resultMap="productMap">
+		<!-- select code, name, price, pictureurl as picture, description from product -->
+		select * from products
+	</select>
+	
+</mapper>

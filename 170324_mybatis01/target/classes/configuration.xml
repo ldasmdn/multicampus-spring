@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<!-- 매퍼파일에서 사용할 모델 클래스의 ID 설정 -->
+	<typeAliases>
+		<typeAlias type="model.Student" alias="student"/>
+	</typeAliases>
+	
+	<!-- 데이터베이스 연결 정보 -->
+	<environments default="my">
+		<environment id="my">
+			<transactionManager type="JDBC"></transactionManager>
+			<dataSource type="UNPOOLED">
+				<property name="driver" value="com.mysql.jdbc.Driver"/>
+				<property name="url" value="jdbc:mysql://localhost:3306/student_db"/>
+				<property name="username" value="root"/>
+				<property name="password" value="mysql"/>
+			</dataSource>
+		</environment>
+	</environments>
+	
+	<!-- 매퍼파일의 위치 -->
+	<mappers>
+		<mapper resource="mapper/studentMapper.xml"/>
+	</mappers>
+</configuration>
