@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 설정자를 통한 주입 -->
+	<bean class="di01.main.Car" id="car">
+		<property name="tire" ref="tire"></property>
+	</bean>
+	<bean class="di01.tire.KoreaTire" id="tire"></bean>
+</beans>
