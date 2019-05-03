@@ -7,7 +7,7 @@
 	</configSuffixes>
 	<enableImports><![CDATA[false]]></enableImports>
 	<configs>
-		<config>src/di01/conf/applicationContext.xml</config>
+		<config>src/di02/applicationContext.xml</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>
