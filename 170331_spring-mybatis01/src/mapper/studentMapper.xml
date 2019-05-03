@@ -13,11 +13,11 @@
 	</update>
 	
 	<delete id="deleteStudent" parameterType="int">
-		delete from students where s_id = #{s_id}
+		delete from students where s_id = #{value}
 	</delete>
 	
 	<select id="selectStudentInfo" parameterType="int" resultType="student">
-		select * from students where s_id = ${s_id}
+		select * from students where s_id = ${value}
 	</select>
 	
 	<select id="selectStudentList" resultType="student">

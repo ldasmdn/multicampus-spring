@@ -14,6 +14,8 @@ public class StudentDaoTest {
 		ApplicationContext context = new GenericXmlApplicationContext("applicationContext.xml");
 		IStudentService service = context.getBean("studentService", IStudentService.class);
 		
+		System.out.println(service.selectStudentInfo(2));
+		
 		for(Student student : service.selectStudentList()) {
 			System.out.println(student);			
 		}
