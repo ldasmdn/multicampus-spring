@@ -3,6 +3,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<bean class="spring01.Greeting" id="gr"></bean>
+	<bean class="spring01.Greeting" id="gr" lazy-init="true" scope="singleton"
+		init-method="initObj" destroy-method="destroyObj"></bean> <!-- score="prototype" 설정 시 소멸동작 함수 실행 안됨 -->
 
 </beans>

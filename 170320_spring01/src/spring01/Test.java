@@ -11,15 +11,21 @@ public class Test {
 		
 		System.out.println("?????");
 		
-		Greeting gr1 = (Greeting) context.getBean("gr");
+		Greeting gr1 = context.getBean("gr", Greeting.class);
 		gr1.greeting();
 		
-		Greeting gr2 = (Greeting) context.getBean("gr");
+		Greeting gr2 = context.getBean("gr", Greeting.class);
 		gr2.greeting();
 		
+		if(gr1 == gr2) {
+			System.out.println("equals"); 
+		}
 		System.out.println(gr1);
-		System.out.println(gr2);
+		System.out.println(gr2);		
 		
+		
+		// 컨테이너 소멸
+		((GenericXmlApplicationContext) context).close();
 	}
 	
 }
