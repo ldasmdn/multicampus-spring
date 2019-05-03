@@ -178,4 +178,31 @@ public class BoardDao implements IBoardDao {
 		return null;
 	}
 
+	@Override
+	public List<HashMap<String, Object>> selectByMultiKeyword(List<String> params) {
+		// TODO Auto-generated method stub
+		SqlSession session = sqlSessionFactory.openSession();
+		
+		try {
+			// -------------------------------------------------------------------
+			// session.getMapper(*.class)
+			// -------------------------------------------------------------------
+			// 생성되는 객체는 IBoardDao 타입이 됨
+			// 각 메소드 위에 애노테이션에 정의된 SQL문을 호출하는 몸통을 갖게 됨
+			for(String list : params) {
+				System.out.println(list);
+			}
+			return session.getMapper(IBoardDao.class).selectByMultiKeyword(params);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			if (session != null) {
+				session.close();
+			}
+		}
+		
+		return null;
+	}
+
 }

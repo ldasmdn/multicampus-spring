@@ -25,4 +25,6 @@ public interface IBoardDao {
 	public List<HashMap<String, Object>> selectBoardList();
 	public List<HashMap<String, Object>> selectBySearch(HashMap<String, Object> params);
 	
+	public List<HashMap<String, Object>> selectByMultiKeyword(List<String> params);
+	
 }
