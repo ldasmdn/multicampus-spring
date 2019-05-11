@@ -12,27 +12,55 @@ public class Test {
 		
 		IBoardDao dao = new BoardDao();
 		
-//		HashMap<String, Object> params = new HashMap<String, Object>();
-//		params.put(Constant.PASS, "PASS"); 
-//		params.put(Constant.NAME, "NAME");
-//		params.put(Constant.EMAIL, "EMAIL");
-//		params.put(Constant.CONTENT, "CONTENT");
-//		dao.insertBoard(params);
-//		
-//		System.out.println(params.get(Constant.NUM));
-//		System.out.println(dao.selecctBoardInfo((int)(long)params.get(Constant.NUM)));
+		//-----------------------------------------
+		// [INSERT] 게시글 등록
+		//-----------------------------------------
+		HashMap<String, Object> insertParams = new HashMap<String, Object>();
+		insertParams.put(Constant.PASS,    "PASS" ); 
+		insertParams.put(Constant.NAME,    "NAME" );
+		insertParams.put(Constant.EMAIL,   "EMAIL");
+		dao.insertBoard(insertParams);
+		int num = (int)(long)insertParams.get(Constant.NUM);
+		System.out.println(insertParams);
+		System.out.println(dao.selecctBoardInfo(num));
 		
-//		HashMap<String, Object> params = new HashMap<>();
-//		params.put("keyword", "TI");
-//		for(HashMap<String, Object> board : dao.selectBySearch(params)) {
-//			System.out.println(board);
-//		}
+		//-----------------------------------------
+		// [UPDATE] 게시글 수정
+		//-----------------------------------------
+		HashMap<String, Object> updateParams = new HashMap<String, Object>();
+		updateParams.put(Constant.PASS,    "updatePASS"   ); 
+		updateParams.put(Constant.NAME,    "updateNAME"   );
+		updateParams.put(Constant.EMAIL,   "updateEMAIL"  );
+		updateParams.put(Constant.TITLE,   "updateTITLE"  );
+		updateParams.put(Constant.CONTENT, "updateCONTENT");
+		updateParams.put(Constant.NUM,      num           );
+		dao.updateBoard(updateParams);
+		System.out.println(dao.selecctBoardInfo(num));
 		
-		List<String> params = new ArrayList<>();
-		params.add("C");
-		params.add("O");
-		for(HashMap<String, Object> board : dao.selectByMultiKeyword(params)) {
+		//-----------------------------------------
+		// [DELETE] 게시글 삭제
+		//-----------------------------------------
+		dao.deleteBoard(num);
+		if(dao.selecctBoardInfo(num) == null) { System.out.println("삭제"); }
+		
+		//-----------------------------------------
+		// [SELECT] 제목 또는 내용으로 조회
+		//-----------------------------------------
+		HashMap<String, Object> selectParams = new HashMap<>();
+		selectParams.put("title",   "update");
+		selectParams.put("content", "AI"    );
+		for(HashMap<String, Object> board : dao.selectBySearch(selectParams)) {
 			System.out.println(board);
+		}
+		
+		//-----------------------------------------
+		// [SELECT] 여러 개의 키워드로 조회
+		//-----------------------------------------
+		List<String> selectKeyparams = new ArrayList<>();
+		selectKeyparams.add("I");
+		selectKeyparams.add("0");
+		for(HashMap<String, Object> result : dao.selectByMultiKeyword(selectKeyparams)) {
+			System.out.println(result);
 		}
 		
 	}

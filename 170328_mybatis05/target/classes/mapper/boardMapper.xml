@@ -4,6 +4,7 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="dao.IBoardDao"> <!-- 연동될 인터페이스의 풀패키지명 -->
 	
+	<!-- title 컬럼 체크 -->
 	<sql id="title">
 		<choose>
 			<when test="title != null">
@@ -15,6 +16,7 @@
 		</choose>
 	</sql>
 	
+	<!-- content 컬럼 체크 -->
 	<sql id="content">
 		<choose>
 			<when test="content != null">
@@ -26,45 +28,47 @@
 		</choose>
 	</sql>
 	
-	
-	<insert id="insertBoard" parameterType="java.util.HashMap"
-		useGeneratedKeys="true" keyProperty="num"> <!-- insert 구문을 실행시킬 인터페이스의 메소드 -->
+	<!-- 인터페이스의 메소드 insertBoard 호출 시 insert 구문 실행 -->
+	<insert id="insertBoard" parameterType="java.util.HashMap" useGeneratedKeys="true" keyProperty="num">
 		
 		insert into board (pass, name, email, title, content, readcount) values(#{pass}, #{name}, #{email},
-		<!-- 동적쿼리 -->
-		<include refid="title"></include>, <include refid="content"></include>, 0)
+		<!-- 동적쿼리 삽입 --><include refid="title"></include>, <!-- 동적쿼리 삽입 --><include refid="content"></include>, 0)
 		
 	</insert>
 	
-	<update id="updateBoard" parameterType="java.util.HashMap"> <!-- update 구문을 실행시킬 인터페이스의 메소드 -->
+	<!-- 인터페이스의 메소드 updateBoard 호출 시 update 구문 실행 -->
+	<update id="updateBoard" parameterType="java.util.HashMap">
 	
-		update board set pass = #{pass}, name = ${name}, email = #{email}, title = <include refid="title"></include>
-		, content = <include refid="content"></include> where num = #{num}
+		update board set pass = #{pass}, name = #{name}, email = #{email}, title = <!-- 동적쿼리 삽입 --><include refid="title"></include>
+		, content = <!-- 동적쿼리 삽입 --><include refid="content"></include> where num = #{num}
 		
 	</update>
 	
-	<delete id="deleteBoard" parameterType="int"> <!-- delete 구문을 실행시킬 인터페이스의 메소드 -->
+	<!-- 인터페이스의 메소드 deleteBoard 호출 시 delete 구문 실행 -->
+	<delete id="deleteBoard" parameterType="int">
 	
 		delete from board where num = #{num}
 		
 	</delete>
 	
-	<select id="selecctBoardInfo" parameterType="int" resultType="java.util.HashMap"> <!-- select 구문을 실행시킬 인터페이스의 메소드 -->
+	<!-- 인터페이스의 메소드 selecctBoardInfo 호출 시 select 구문 실행 -->
+	<select id="selecctBoardInfo" parameterType="int" resultType="java.util.HashMap">
 	
 		select * from board where num = #{num}
 		
 	</select>
 	
-	<select id="selectBoardList" resultType="java.util.HashMap"> <!-- select 구문을 실행시킬 인터페이스의 메소드 -->
+	<!-- 인터페이스의 메소드 selectBoardList 호출 시 select 구문 실행 -->
+	<select id="selectBoardList" resultType="java.util.HashMap">
 	
 		select * from board
 		
 	</select>
 	
+	<!-- 인터페이스의 메소드 selectBySearch 호출 시 select 구문 실행 -->
 	<select id="selectBySearch" parameterType="String" resultType="java.util.HashMap">
 	
 		select * from board where 1=0
-		
 		<if test="title != null">
 			or title like '%${title}%'
 		</if>
@@ -79,13 +83,14 @@
 		
 	</select>
 	
+	<!-- 인터페이스의 메소드 selectByMultiKeyword 호출 시 select 구문 실행 -->
 	<select id="selectByMultiKeyword" parameterType="java.util.List" resultType="java.util.HashMap">
 		
 		select * from board where 1=0
-		
 		<foreach item="keyword" collection="list">
 			or content like '%${keyword}%'
 		</foreach>
 				
 	</select>
+	
 </mapper>
