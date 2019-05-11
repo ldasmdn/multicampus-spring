@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.IBoardDao"> <!-- 연동될 인터페이스의 풀패키지명 -->
+	
+	<!-- title 컬럼 체크 -->
+	<sql id="title">
+		<choose>
+			<when test="title != null">
+				#{title}
+			</when>
+			<otherwise>
+				'DEFAULT'
+			</otherwise>
+		</choose>
+	</sql>
+	
+	<!-- content 컬럼 체크 -->
+	<sql id="content">
+		<choose>
+			<when test="content != null">
+				#{content}
+			</when>
+			<otherwise>
+				'DEFAULT'
+			</otherwise>
+		</choose>
+	</sql>
+	
+	<!-- 인터페이스의 메소드 insertBoard 호출 시 insert 구문 실행 -->
+	<insert id="insertBoard" parameterType="java.util.HashMap" useGeneratedKeys="true" keyProperty="num">
+		
+		insert into board (pass, name, email, title, content, readcount) values(#{pass}, #{name}, #{email},
+		<!-- 동적쿼리 삽입 --><include refid="title"></include>, <!-- 동적쿼리 삽입 --><include refid="content"></include>, 0)
+		
+	</insert>
+	
+	<!-- 인터페이스의 메소드 updateBoard 호출 시 update 구문 실행 -->
+	<update id="updateBoard" parameterType="java.util.HashMap">
+	
+		update board set pass = #{pass}, name = #{name}, email = #{email}, title = <!-- 동적쿼리 삽입 --><include refid="title"></include>
+		, content = <!-- 동적쿼리 삽입 --><include refid="content"></include> where num = #{num}
+		
+	</update>
+	
+	<!-- 인터페이스의 메소드 deleteBoard 호출 시 delete 구문 실행 -->
+	<delete id="deleteBoard" parameterType="int">
+	
+		delete from board where num = #{num}
+		
+	</delete>
+	
+	<!-- 인터페이스의 메소드 selecctBoardInfo 호출 시 select 구문 실행 -->
+	<select id="selecctBoardInfo" parameterType="int" resultType="java.util.HashMap">
+	
+		select * from board where num = #{num}
+		
+	</select>
+	
+	<!-- 인터페이스의 메소드 selectBoardList 호출 시 select 구문 실행 -->
+	<select id="selectBoardList" resultType="java.util.HashMap">
+	
+		select * from board
+		
+	</select>
+	
+	<!-- 인터페이스의 메소드 selectBySearch 호출 시 select 구문 실행 -->
+	<select id="selectBySearch" parameterType="String" resultType="java.util.HashMap">
+	
+		select * from board where 1=0
+		<if test="title != null">
+			or title like '%${title}%'
+		</if>
+		
+		<if test="content != null">
+			or content like '%${content}%'
+		</if>
+		
+		<if test="title == null and content == null">
+			or 1=1
+		</if>
+		
+	</select>
+	
+	<select id="selectBoardList" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select * from board limit #{index}, ${count}	
+	</select>
+	
+	<select id="getBoardTotal" resultType="java.lang.Integer">
+		select count(*) from board;
+	</select>
+	
+</mapper>
