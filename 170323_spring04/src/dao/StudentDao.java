@@ -45,10 +45,8 @@ public class StudentDao {
 		return jdbcTemplate.query(sql, mapper);
 	}
 	
-	
 	private RowMapper<HashMap<String, Object>> mapper = new StudentMapper();
 	class StudentMapper implements RowMapper<HashMap<String, Object>> {
-
 		@Override
 		public HashMap<String, Object> mapRow(ResultSet rs, int rowNum) throws SQLException {
 			// TODO Auto-generated method stub
@@ -59,6 +57,5 @@ public class StudentDao {
 			result.put(Student.SCORE, rs.getInt   (Student.SCORE));
 			return result;
 		}
-		
 	}
 }
