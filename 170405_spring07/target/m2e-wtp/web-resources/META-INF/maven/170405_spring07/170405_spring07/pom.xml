@@ -51,6 +51,5 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>4.3.24.RELEASE</version>
 		</dependency>
-
 	</dependencies>
 </project>
