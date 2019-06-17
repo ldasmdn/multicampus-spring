@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- HandlerMapping -->
+	<!-- HandlerMapping이 등록되지 않으면, BeanNameUrlHandlerMapping이 빈으로 자동 등록됨 -->
+	<!-- <bean id="handlerMapping" class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"></bean> -->
+	
+	<!-- Controller가 빈으로 등록될 때 name에 해당하는 url을 처리하게 된다. -->
+	<bean name="/hello/hello.do" class="controller.HelloController"></bean>
+	<bean name="/time/whatTime.do" class="controller.WhatTimeController"></bean>
+	
+	<!-- ViewResolver -->
+	<!-- JSP를 통한 HTML응답은 내부의 자원을 사용해서 생성한다는 의미의 구현 클래스명 -->
+	<!-- ViewResolver가 등록되지 않으면, InternalResourceViewResolver가 빈으로 자동 등록됨 -->
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/jsp/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+</beans>
