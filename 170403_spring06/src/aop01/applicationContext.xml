@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+
+	<bean id="boy" class="aop01.Boy"></bean>
+	<bean id="girl" class="aop01.Girl"></bean>
+	<bean id="aspect" class="aop01.PersonAspect"></bean>
+	
+	<!-- aop 설정의 시작태그 -->
+	<aop:config>
+		<aop:aspect ref="aspect">
+			<aop:pointcut expression="execution(public * aop01.*.doSomething(..))" id="pt"/>
+			<aop:before method="doBefore" pointcut-ref="pt"/>
+			<aop:after-returning method="doAfterReturning" pointcut-ref="pt"/>
+			<aop:after-throwing method="doAfterThrowing" pointcut-ref="pt"/>
+			<aop:after method="doAfter" pointcut-ref="pt"/>
+		</aop:aspect>
+	</aop:config>
+</beans>
