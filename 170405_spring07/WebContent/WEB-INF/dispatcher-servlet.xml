@@ -8,8 +8,23 @@
 	<!-- <bean id="handlerMapping" class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"></bean> -->
 	
 	<!-- Controller가 빈으로 등록될 때 name에 해당하는 url을 처리하게 된다. -->
+	<!--
 	<bean name="/hello/hello.do" class="controller.HelloController"></bean>
 	<bean name="/time/whatTime.do" class="controller.WhatTimeController"></bean>
+	-->
+	
+	<!-- SimpleUrlHan -->
+	<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping" id="handlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/hello/hello.do">helloController</prop>
+				<prop key="/time/whatTime.do">whatTimeController</prop>
+			</props>
+		</property>
+	</bean>
+	<bean class="controller.HelloController" name="helloController"></bean>
+	<bean class="controller.WhatTimeController" name="whatTimeController"></bean>
+	
 	
 	<!-- ViewResolver -->
 	<!-- JSP를 통한 HTML응답은 내부의 자원을 사용해서 생성한다는 의미의 구현 클래스명 -->
