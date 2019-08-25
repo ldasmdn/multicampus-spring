@@ -12,22 +12,13 @@ import java.util.List;
 
 import commons.Constant;
 
-/**
- * <pre>
- * Á÷¿ø/ºÎ¼­ Å×ÀÌºí¿¡ Á¢±ÙÇÏ±â À§ÇÑ DAO Å¬·¡½º
- * </pre>
- * 
- * @version 1.0, 2019/04/30
- *
- */
 public class EmployeeDao {
 	
 	//-------------------------------------------------------
-	// ÀÏ¹İÀûÀÎ JDBC ±¸Çö
+	// (1) VO í´ë˜ìŠ¤ë¥¼ HashMapìœ¼ë¡œ ëŒ€ì²´í•˜ê¸°
+	// (2) 2ê°œì˜ í…Œì´ë¸”ì„ ì¡°ì¸í•˜ì—¬ ë°ì´í„° ì¡°íšŒ
 	//-------------------------------------------------------
-	// 1. VO Å¬·¡½º¸¦ »ç¿ëÇÏÁö ¾Ê°í HashMapÀ¸·Î ´ëÃ¼ÇÏ±â
-	// 2. 2°³ÀÇ Å×ÀÌºíÀ» Á¶ÀÎÇØ¼­ µ¥ÀÌÅÍ Á¶È¸
-	
+
 	private Connection conn;
 	private static EmployeeDao instance;
 	
@@ -46,13 +37,13 @@ public class EmployeeDao {
 			
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.out.println("Å¬·¡½º ÀûÀç ½ÇÆĞ");
+			System.out.println("í´ë˜ìŠ¤ ì ì¬ ì‹¤íŒ¨");
 			
 		} catch (SQLException e) {
 			
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.out.println("Ä¿³Ø¼Ç ¿¬°á ½ÇÆĞ");
+			System.out.println("ì»¤ë„¥ì…˜ ì—°ê²° ì‹¤íŒ¨");
 			
 		}
 		
@@ -66,10 +57,7 @@ public class EmployeeDao {
 	}
 	
 	/**
-	 * (INSERT) Á÷¿øÁ¤º¸¸¦ ÇÏ³ª¸¦ Ãß°¡ÇÏ´Â ±â´É
-	 * 
-	 * @param params
-	 * @return
+	 * [INSERT] ì§ì›ì •ë³´ë¥¼ í•˜ë‚˜ë¥¼ ì¶”ê°€í•˜ëŠ” ê¸°ëŠ¥
 	 */
 	public boolean insertEmp(HashMap<String, Object> params) {
 		
@@ -82,11 +70,11 @@ public class EmployeeDao {
 			pstmt.setString(2, (String) params.get(Constant.ENAME)   );
 			pstmt.setString(3, (String) params.get(Constant.JOB)     );
 			pstmt.setInt   (4, (int)    params.get(Constant.MGR)     );
-			pstmt.setString(5, (String) params.get(Constant.HIREDATE)); // java.util.Date´Â Àû¿ëµÇÁö ¾ÊÀ½
+			pstmt.setString(5, (String) params.get(Constant.HIREDATE)); // java.util.DateëŠ” ì ìš©ë˜ì§€ ì•ŠìŒ
 			pstmt.setInt   (6, (int)    params.get(Constant.SAL)     );
 			pstmt.setInt   (7, (int)    params.get(Constant.COMM)    );
 			pstmt.setInt   (8, (int)    params.get(Constant.DEPTNO)  );
-			int result = pstmt.executeUpdate(); // Äõ¸® ½ÇÇà
+			int result = pstmt.executeUpdate(); // ì¿¼ë¦¬ ì‹¤í–‰
 			
 			if(result > 0)
 				return true;
@@ -110,10 +98,7 @@ public class EmployeeDao {
 	}
 	
 	/**
-	 * (INSERT) ºÎ¼­Á¤º¸ ÇÏ³ª¸¦ Ãß°¡ÇÏ´Â ±â´É
-	 * 
-	 * @param params
-	 * @return
+	 * [INSERT] ë¶€ì„œì •ë³´ í•˜ë‚˜ë¥¼ ì¶”ê°€í•˜ëŠ” ê¸°ëŠ¥
 	 */
 	public boolean insertDept(HashMap<String, Object> params) {
 		
@@ -125,7 +110,7 @@ public class EmployeeDao {
 			pstmt.setInt   (1, (int)    params.get(Constant.DEPTNO));
 			pstmt.setString(2, (String) params.get(Constant.DNAME) );
 			pstmt.setString(3, (String) params.get(Constant.LOC)   );
-			int result = pstmt.executeUpdate(); // Äõ¸® ½ÇÇà
+			int result = pstmt.executeUpdate(); // ì¿¼ë¦¬ ì‹¤í–‰
 			
 			if(result > 0)
 				return true;
@@ -149,10 +134,7 @@ public class EmployeeDao {
 	}
 	
 	/**
-	 * (UPDATE) Á÷¿øÁ¤º¸ ÇÏ³ª¸¦ ¼öÁ¤ÇÏ´Â ±â´É
-	 * 
-	 * @param params
-	 * @return
+	 * [UPDATE] ì§ì›ì •ë³´ í•˜ë‚˜ë¥¼ ìˆ˜ì •í•˜ëŠ” ê¸°ëŠ¥
 	 */
 	public boolean updateEmp(HashMap<String, Object> params) {
 
@@ -165,7 +147,7 @@ public class EmployeeDao {
 								+ ", comm      = ? "
 								+ ", deptno    = ? "
 								+ "where empno = ? ";
-
+		
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, (String) params.get(Constant.ENAME)   );
@@ -203,10 +185,7 @@ public class EmployeeDao {
 	}
 	
 	/**
-	 * (DELETE) Á÷¿øÁ¤º¸ ÇÏ³ª¸¦ »èÁ¦ÇÏ´Â ±â´É
-	 * 
-	 * @param empno
-	 * @return
+	 * [DELETE] ì§ì›ì •ë³´ í•˜ë‚˜ë¥¼ ì‚­ì œí•˜ëŠ” ê¸°ëŠ¥
 	 */
 	public boolean deleteEmp(int empno) {
 
@@ -216,7 +195,7 @@ public class EmployeeDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, empno);
-			int result = pstmt.executeUpdate(); // Äõ¸® ½ÇÇà
+			int result = pstmt.executeUpdate(); // ì¿¼ë¦¬ ì‹¤í–‰
 
 			if (result > 0)
 				return true;
@@ -242,10 +221,7 @@ public class EmployeeDao {
 	}
 	
 	/**
-	 * (SELECT) ºÎ¼­·Î Á÷¿øÀ» °Ë»öÇÏ´Â ±â´É
-	 * 
-	 * @param deptno
-	 * @return
+	 * [SELECT] ë¶€ì„œë¡œ ì§ì›ì„ ê²€ìƒ‰í•˜ëŠ” ê¸°ëŠ¥
 	 */
 	public List<HashMap<String, Object>> selectEmpByDeptno(int deptno) {
 
@@ -258,7 +234,7 @@ public class EmployeeDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, deptno);
-			rs = pstmt.executeQuery(); // Äõ¸® ½ÇÇà
+			rs = pstmt.executeQuery(); // ì¿¼ë¦¬ ì‹¤í–‰
 
 			while (rs.next()) {
 				HashMap<String, Object> emp = new HashMap<>();
@@ -294,10 +270,7 @@ public class EmployeeDao {
 	}
 	
 	/**
-	 * (SELECT) Á÷¹«·Î Á÷¿øÀ» °Ë»öÇÏ´Â ±â´É
-	 * 
-	 * @param job
-	 * @return
+	 * [SELECT] ì§ë¬´ë¡œ ì§ì›ì„ ê²€ìƒ‰í•˜ëŠ” ê¸°ëŠ¥
 	 */
 	public List<HashMap<String, Object>> selectEmpByJob(String job) {
 
@@ -349,10 +322,7 @@ public class EmployeeDao {
 	}
 	
 	/**
-	 * (SELECT) Á÷¿ø ÀÌ¸§(Æ÷ÇÔ)À¸·Î °Ë»öÇÏ´Â ±â´É
-	 * 
-	 * @param ename
-	 * @return
+	 * [SELECT] ì§ì› ì´ë¦„(í¬í•¨)ìœ¼ë¡œ ê²€ìƒ‰í•˜ëŠ” ê¸°ëŠ¥
 	 */
 	public List<HashMap<String, Object>> selectEmpByEname(String ename) {
 
