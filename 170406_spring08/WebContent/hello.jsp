@@ -7,23 +7,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<table>
-		<tr>
-			<td>hello</td>
-			 <td>${greeting}</td>
-		</tr>
-		<tr>
-			<td>userIP</td>
-			<td>${userIP}</td>
-		</tr>
-		<tr>
-			<td>name</td>
-			<td>${name}</td>
-		</tr>
-		<tr>
-			<td>age</td>
-			<td>${age}</td>
-		</tr>
-	</table>
+	${greeting} <br>
+	${yourIP}	<br>
+	${yourName} <br>
+	${yourAge}
 </body>
 </html>
